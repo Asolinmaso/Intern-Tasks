@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Parser & Analyzer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .upload-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px dashed #dee2e6;
+            transition: all 0.3s ease;
+        }
+
+        .upload-section:hover {
+            border-color: #4facfe;
+            background: #f0f8ff;
+        }
+
+        .upload-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .file-input-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .file-input {
+            opacity: 0;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .file-input-label {
+            display: block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.2s;
+            font-weight: bold;
+        }
+
+        .file-input-label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .upload-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(17, 153, 142, 0.4);
+        }
+
+        .upload-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results-section {
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .results-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #4facfe;
+            padding-bottom: 10px;
+        }
+
+        .extracted-data {
+            display: none;
+        }
+
+        .data-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .data-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4facfe;
+        }
+
+        .data-label {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .data-value {
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .download-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4facfe;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .success {
+            color: #155724;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 AI Resume Parser & Analyzer</h1>
+            <p>Extract structured data from resumes using advanced AI and semantic search</p>
+        </div>
+
+        <div class="main-content">
+            <div class="upload-section">
+                <h2>📄 Upload Resume</h2>
+                <div class="file-input-container">
+                    <input type="file" id="resumeFile" class="file-input" accept=".pdf,.doc,.docx,.txt" multiple>
+                    <label for="resumeFile" class="file-input-label">
+                        Choose Resume Files (PDF, DOC, DOCX, TXT)
+                    </label>
+                </div>
+                <div id="fileInfo"></div>
+                <button onclick="processResumes()" id="processBtn" class="upload-btn">
+                    🔍 Process & Extract Data
+                </button>
+            </div>
+
+            <div class="results-section">
+                <h2>📊 Extracted Information</h2>
+                <div id="results">
+                    <p style="color: #666; text-align: center; padding: 40px;">
+                        Upload and process resumes to see extracted data here
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let processedData = [];
+
+        document.getElementById('resumeFile').addEventListener('change', function(e) {
+            const files = e.target.files;
+            const fileInfo = document.getElementById('fileInfo');
+            
+            if (files.length > 0) {
+                let info = `<div class="success">Selected ${files.length} file(s):<br>`;
+                for (let i = 0; i < files.length; i++) {
+                    info += `• ${files[i].name}<br>`;
+                }
+                info += '</div>';
+                fileInfo.innerHTML = info;
+            }
+        });
+
+        async function processResumes() {
+            const fileInput = document.getElementById('resumeFile');
+            const files = fileInput.files;
+            
+            if (files.length === 0) {
+                alert('Please select at least one resume file');
+                return;
+            }
+
+            const resultsDiv = document.getElementById('results');
+            const processBtn = document.getElementById('processBtn');
+            
+            processBtn.disabled = true;
+            processBtn.textContent = 'Processing...';
+            
+            resultsDiv.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Processing resumes with AI...</p>
+                </div>
+            `;
+
+            try {
+                processedData = [];
+                
+                for (let i = 0; i < files.length; i++) {
+                    const formData = new FormData();
+                    formData.append('resume', files[i]);
+                    
+                    const response = await fetch('/api/parse-resume', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    processedData.push(data);
+                }
+                
+                displayResults(processedData);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                resultsDiv.innerHTML = `
+                    <div class="error">
+                        Error processing resumes: ${error.message}
+                    </div>
+                `;
+            } finally {
+                processBtn.disabled = false;
+                processBtn.textContent = '🔍 Process & Extract Data';
+            }
+        }
+
+        function displayResults(data) {
+            const resultsDiv = document.getElementById('results');
+            
+            let html = '';
+            
+            data.forEach((resume, index) => {
+                html += `
+                    <div class="data-grid" style="margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
+                        <h3 style="color: #4facfe; margin-bottom: 15px;">Resume ${index + 1}</h3>
+                        
+                        <div class="data-item">
+                            <div class="data-label">Name:</div>
+                            <div class="data-value">${resume.name || 'Not found'}</div>
+                        </div>
+                        
+                        <div class="data-item">
+                            <div class="data-label">Email:</div>
+                            <div class="data-value">${resume.email || 'Not found'}</div>
+                        </div>
+                        
+                        <div class="data-item">
+                            <div class="data-label">Phone:</div>
+                            <div class="data-value">${resume.phone || 'Not found'}</div>
+                        </div>
+                        
+                        <div class="data-item">
+                            <div class="data-label">Location:</div>
+                            <div class="data-value">${resume.location || 'Not found'}</div>
+                        </div>
+                        
+                        <div class="data-item">
+                            <div class="data-label">Education:</div>
+                            <div class="data-value">${resume.education || 'Not found'}</div>
+                        </div>
+                        
+                        <div class="data-item">
+                            <div class="data-label">Skills:</div>
+                            <div class="data-value">${Array.isArray(resume.skills) ? resume.skills.join(', ') : (resume.skills || 'Not found')}</div>
+                        </div>
+                        
+                        <div class="data-item">
+                            <div class="data-label">Years of Experience:</div>
+                            <div class="data-value">${resume.experience || 'Not found'}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                <div class="download-section">
+                    <button onclick="downloadExcel()" class="download-btn">
+                        📥 Download Excel Report
+                    </button>
+                </div>
+            `;
+            
+            resultsDiv.innerHTML = html;
+        }
+
+        async function downloadExcel() {
+            if (processedData.length === 0) {
+                alert('No data to export');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/export-excel', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ data: processedData })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'resume_data.xlsx';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                
+            } catch (error) {
+                console.error('Error downloading Excel file:', error);
+                alert('Error downloading Excel file: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
