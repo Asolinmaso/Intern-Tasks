@@ -1,0 +1,55 @@
+ol li{
+    list-style: none;
+}
+.left-details{
+    text-align: left;
+}
+.right-details{
+    text-align: right;
+}
+.profile-landscape{
+    margin-bottom: 2rem;
+}
+/* label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+} */
+
+
+
+select {
+  background: #d8e8f9;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-right: 10px;
+  min-width: 150px;
+}
+.Semester-Details , .Minor-Details ,.Subjects-Details , .Submit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+.sem{
+    
+    align-items: center;
+}
+
+.Minor-Details Col {
+  gap: 10px;
+}
+
+.submit-btn {
+  margin-top: 15px;
+  background-color: #fcb900;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}

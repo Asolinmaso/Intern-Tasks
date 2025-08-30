@@ -1,0 +1,419 @@
+/* General Reset & Layout */
+body {
+  margin: 0;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f9;
+  background-image: url('./assets/university.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+/* Dark overlay on background image */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5); /* dark transparent overlay */
+  z-index: -1;
+}
+
+/* App Container */
+.app-container {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Background blur behind content */
+.background-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/university.png'); /* ✅ note the slash at the start */
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.75) blur(2px);
+  z-index: -1;
+}
+
+
+/* Foreground content styling */
+.content-layer {
+  position: relative;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(0px);
+}
+
+/* Root styling */
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Logo Styling */
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+/* Logo spin animation */
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+/* Card Base Style */
+.card {
+  padding: 2em;
+}
+
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Fade-in animation */
+.fade-in {
+  animation: fadeIn 1.2s ease-in-out both;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Headings in sections */
+section h2 {
+  font-size: 2.2rem;
+  color: #002147;
+}
+
+/* Docs Text */
+.read-the-docs {
+  color: #888;
+}
+
+/* List group items */
+.list-group-item {
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+.list-group-item:hover {
+  background-color: #f0f8ff;
+  transform: scale(1.02);
+}
+
+/* Contact Form Styling */
+/* Contact Section Styles */
+.contact-form {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.contact-form .form-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.contact-form .form-control {
+  border-radius: 8px;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.contact-form .form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+  outline: none;
+}
+
+.contact-form button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive section spacing */
+section {
+  scroll-margin-top: 80px;
+}
+
+/* Hero Section */
+.hero-title {
+  font-size: 3.5rem;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.hero-subtitle {
+  max-width: 700px;
+  margin: 0 auto;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
+.carousel-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  scroll-behavior: smooth;
+}
+
+.carousel-card {
+  min-width: 250px;
+  flex: 0 0 auto;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.carousel-card:hover {
+  transform: scale(1.05);
+}
+
+.carousel-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.carousel-container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+.notice-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding: 1rem 0;
+  scroll-behavior: smooth;
+}
+
+.notice-card {
+  min-width: 300px;
+  flex: 0 0 auto;
+  background-color: #fefefe;
+  border-left: 6px solid #007bff;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.notice-card:hover {
+  transform: translateY(-5px);
+}
+
+.notice-carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.notice-carousel::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+/* Footer Styles */
+.footer {
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #f0f0f0;
+  padding: 1.5rem 0;
+  font-size: 0.95rem;
+  margin-top: 2rem;
+}
+
+.footer p {
+  margin: 0.3rem 0;
+}
+
+.footer a {
+  color: #f0f0f0;
+  text-decoration: none;
+  margin: 0 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #00bfff;
+  text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.chatbot-wrapper {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.chat-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.chat-button:hover {
+  background-color: #0056b3;
+}
+
+.chat-popup {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 320px;
+  max-height: 450px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.chat-popup.open {
+  display: flex;
+}
+
+.chat-header {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 16px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+}
+
+.chat-body {
+  padding: 10px;
+  overflow-y: auto;
+  flex-grow: 1;
+  background: #f9f9f9;
+}
+
+.chat-message {
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.chat-message.user {
+  background-color: #d1e7ff;
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+.chat-message.bot {
+  background-color: #f1f0f0;
+  align-self: flex-start;
+  margin-right: auto;
+}
+
+.chat-input-area {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+
+.chat-input-area input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  outline: none;
+  font-size: 1rem;
+}
+
+.chat-input-area button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  cursor: pointer;
+}

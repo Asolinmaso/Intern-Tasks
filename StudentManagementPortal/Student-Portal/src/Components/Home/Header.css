@@ -1,0 +1,113 @@
+/* Header.css */
+
+/* Top Header Style */
+.header-top {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+.logo {
+  width: 15vh;
+  height: 50vh;
+  margin-left: 35vh;
+  transition: transform 0.3s ease-in-out;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.institute-name {
+  font-weight: 600;
+  color: #002f6c;
+  font-size: 18px;
+  animation: fadeInLeft 0.8s ease-out;
+}
+
+/* Navbar Style */
+.navbar {
+  background-color: #002f6c !important;
+  padding: 10px 30px;
+  transition: all 0.3s ease;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+/* Shrink Navbar (optional when scrolling) */
+.navbar.shrink {
+  padding: 5px 30px;
+}
+
+.navbar-nav .nav-link {
+  color: white !important;
+  font-weight: 500;
+  margin-left: 15px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0%;
+  height: 2px;
+  background-color: #f5c518;
+  transition: width 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #f5c518 !important;
+}
+
+.navbar-nav .nav-link:hover::after {
+  width: 100%;
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler-icon {
+  filter: invert(1);
+}
+
+@media (max-width: 991px) {
+  .navbar-nav {
+    background-color: #002f6c;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .navbar-nav .nav-link {
+    margin: 5px 0;
+  }
+}
+
+/* ========== Animations ========== */
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

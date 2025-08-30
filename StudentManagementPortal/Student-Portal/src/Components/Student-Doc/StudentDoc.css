@@ -1,0 +1,124 @@
+.student-section {
+  font-family: Arial, sans-serif;
+  padding: 30px;
+  background: white;
+  color: #333;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 15px;
+}
+
+.title h1 {
+  font-size: 22px;
+  margin: 0;
+}
+
+.title p {
+  font-size: 14px;
+  color: gray;
+  margin: 4px 0 0;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.support {
+  color: #1e40af;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.logout-btn {
+  background-color: #fbbf24;
+  border: none;
+  padding: 8px 16px;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Latest section */
+.latest {
+  margin-top: 30px;
+}
+
+.latest h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.latest-grid {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.latest-card {
+  background-color: #e0f2fe;
+  border-radius: 10px;
+  padding: 20px;
+  flex: 1 1 200px;
+  text-align: center;
+  transition: background 0.3s;
+}
+
+.latest-card:hover {
+  background-color: #bae6fd;
+}
+
+.icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.label {
+  font-weight: 600;
+  color: #1d4ed8;
+  font-size: 14px;
+}
+
+/* Forms and Documents section */
+.section-grid {
+  display: flex;
+  gap: 40px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.section-box {
+  flex: 1 1 300px;
+}
+
+.section-box h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.section-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.section-box li {
+  background-color: #e0f2fe;
+  padding: 8px;
+  border-radius: 5px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.section-box li:hover {
+  background-color: #bae6fd;
+}
